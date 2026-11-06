@@ -3,7 +3,7 @@
 Public website for **MB95**, a technology company from Malerkotla, Punjab, India.
 
 - `index.html` — the full single-page site (no build step)
-- `assets/` — MB95 logo (`mb95-logo.webp`), header mark, tab and home-screen icons, social preview image
+- `assets/` — animated logo layers (`logo-green`, `logo-white`, `logo-word`), header mark, tab and home-screen icons, social preview image
 - `.nojekyll` — tells GitHub Pages to serve files as-is
 
 ## Publish with GitHub Pages
