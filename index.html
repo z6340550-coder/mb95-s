@@ -3,483 +3,112 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MB95 — Technology for structured work</title>
-  <meta name="description" content="MB95 is a technology company from Malerkotla, Punjab, building Workdesk, Workshell and the Workdesk Store: an ecosystem of products for structured work.">
+  <title>MB95: technology for structured work</title>
+  <meta name="description" content="MB95 is a technology company from Malerkotla, Punjab, building Workdesk and WorkShell: an ecosystem for structured work.">
   <meta name="theme-color" content="#000000">
   <link rel="icon" href="assets/icon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="assets/icon-180.png">
-  <meta property="og:title" content="MB95">
-  <meta property="og:description" content="Technology for structured work, from Malerkotla, Punjab.">
+  <meta property="og:title" content="MB95: technology for structured work">
+  <meta property="og:description" content="MB95 is a technology company from Malerkotla, Punjab, building Workdesk and WorkShell: an ecosystem for structured work.">
   <meta property="og:image" content="assets/og.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
-    /* Tokens ------------------------------------------------------------ */
-    :root {
-      --black: #000000;
-      --mint: #00F5B0;
-      --mint-deep: #0A4A3A;   /* traces, rules */
-      --white: #FFFFFF;
-      --fog: #A3ADA9;         /* secondary text, 8.6:1 on black */
-      --graphite: #141817;    /* raised surfaces */
-
-      --display: "Michroma", "Eurostile", "Arial Black", sans-serif;
-      --body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
-
-      /* Modular scale, ratio 1.333 from 17px */
-      --s-1: 0.8125rem;
-      --s0: 1.0625rem;
-      --s1: 1.4167rem;
-      --s2: 1.8889rem;
-      --s3: 2.5185rem;
-      --s4: 3.358rem;
-
-      --measure: 62ch;
-      --gutter: clamp(1.25rem, 5vw, 4rem);
-      --bus: 2.5rem;          /* x-offset of the product bus line */
-    }
-
-    *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background: var(--black);
-      color: var(--white);
-      font-family: var(--body);
-      font-size: var(--s0);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-    a { color: var(--mint); text-underline-offset: 0.2em; }
-    a:focus-visible, button:focus-visible {
-      outline: 2px solid var(--mint);
-      outline-offset: 4px;
-      border-radius: 2px;
-    }
-    p { margin: 0 0 1em; max-width: var(--measure); }
-    h1, h2, h3 {
-      font-family: var(--display);
-      font-weight: 400;
-      line-height: 1.2;
-      margin: 0;
-      letter-spacing: 0.02em;
-    }
-    .wrap {
-      width: 100%;
-      max-width: 72rem;
-      margin-inline: auto;
-      padding-inline: var(--gutter);
-    }
-    .skip {
-      position: absolute; left: -999px; top: 0;
-      background: var(--mint); color: var(--black); padding: 0.5rem 1rem;
-    }
-    .skip:focus { left: 1rem; top: 1rem; z-index: 10; }
-
-    /* Header ------------------------------------------------------------ */
-    .site-header {
-      position: sticky; top: 0; z-index: 5;
-      background: rgba(0, 0, 0, 0.88);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--mint-deep);
-    }
-    .site-header .wrap {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 1.5rem; min-height: 4rem;
-    }
-    .brand {
-      display: inline-flex; align-items: center; gap: 0.75rem;
-      color: var(--white); text-decoration: none;
-      font-family: var(--display); font-size: 1.05rem; letter-spacing: 0.12em;
-    }
-    .brand img { width: 3rem; height: auto; display: block; }
-    .nine { color: var(--mint); }
-    .site-nav ul {
-      display: flex; gap: clamp(1rem, 3vw, 2rem);
-      list-style: none; margin: 0; padding: 0;
-    }
-    .site-nav a {
-      color: var(--fog); text-decoration: none; font-size: 0.95rem; font-weight: 500;
-    }
-    .site-nav a:hover { color: var(--white); }
-
-    /* Hero -------------------------------------------------------------- */
-    .hero { padding-block: clamp(3rem, 9vw, 7rem) clamp(4rem, 10vw, 8rem); }
-    /* Animated logo: the official artwork split into stacked layers.
-       Power-on sequence: the centre node fires, green circuits spread out
-       from it, white circuits flicker on, then the wordmark types in.
-       Afterwards: a slow pulse on the centre node and a current sweep. */
-    .hero-logo { margin: 0; line-height: 0; }
-    .logo {
-      --cx: 50.71%; --cy: 39.91%;          /* centre node of the mark */
-      display: block;
-      position: relative;
-      width: min(100%, 36rem);
-      aspect-ratio: 953 / 873;
-      margin-left: -1.5%;                   /* optical: artwork carries its own padding */
-    }
-    .logo > * { position: absolute; inset: 0; width: 100%; height: 100%; }
-
-    .l-green {
-      clip-path: circle(0% at var(--cx) var(--cy));
-      animation: spread 1.5s cubic-bezier(.55,.05,.3,1) .45s forwards;
-    }
-    .l-white {
-      opacity: 0;
-      animation: flicker .7s steps(1, end) 1.55s forwards;
-    }
-    .l-sweep {
-      background: linear-gradient(100deg, transparent 42%, rgba(255,255,255,.9) 50%, transparent 58%)
-                  no-repeat 160% 0 / 260% 100%;
-      -webkit-mask: url(assets/logo-green.webp) center / 100% 100% no-repeat;
-              mask: url(assets/logo-green.webp) center / 100% 100% no-repeat;
-      mix-blend-mode: screen;
-      animation: sweep 7s ease-in-out 3.2s infinite;
-    }
-    .l-core {
-      inset: auto;
-      left: var(--cx); top: var(--cy);
-      width: 12%; height: auto; aspect-ratio: 1;
-      translate: -50% -50%;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,255,255,.95) 0 18%, rgba(0,245,176,.75) 34%, rgba(0,245,176,0) 70%);
-      mix-blend-mode: screen;
-      opacity: 0; scale: 0.2;
-      animation: ignite .7s ease-out .1s forwards, pulse 3.2s ease-in-out 2.6s infinite;
-    }
-    .l-word { opacity: 0; translate: 0 6%; animation: type .45s ease-out forwards; }
-    .l-m    { clip-path: inset(0 65% 0 22%); animation-delay: 2.0s; }
-    .l-b    { clip-path: inset(0 50% 0 39%); animation-delay: 2.15s; }
-    .l-9    { clip-path: inset(0 36% 0 54%); animation-delay: 2.3s; }
-    .l-5    { clip-path: inset(0 22% 0 68%); animation-delay: 2.45s; }
-
-    @keyframes ignite { 60% { opacity: 1; scale: 1.25; } to { opacity: .55; scale: 1; } }
-    @keyframes pulse  { 0%, 100% { opacity: .35; scale: .9; } 50% { opacity: .75; scale: 1.1; } }
-    @keyframes spread { to { clip-path: circle(80% at var(--cx) var(--cy)); } }
-    @keyframes flicker { 0% { opacity: .8; } 15% { opacity: .1; } 30% { opacity: .9; } 45% { opacity: .3; } 60%, 100% { opacity: 1; } }
-    @keyframes sweep  { 0% { background-position: 160% 0; } 30%, 100% { background-position: -60% 0; } }
-    @keyframes type   { to { opacity: 1; translate: 0 0; } }
-    .hero-lede {
-      margin-top: clamp(1.5rem, 4vw, 2.5rem);
-      font-size: var(--s1);
-      line-height: 1.45;
-      max-width: 34ch;
-    }
-    .motto {
-      color: var(--fog);
-      font-style: italic;
-      margin-top: 1.25rem;
-    }
-
-    /* Sections ---------------------------------------------------------- */
-    .section { padding-block: clamp(4rem, 9vw, 7rem); border-top: 1px solid var(--mint-deep); }
-    .section-head { margin-bottom: clamp(2rem, 5vw, 3.5rem); max-width: var(--measure); }
-    .section-head h2 { font-size: clamp(1.6rem, 4vw, var(--s3)); margin-bottom: 1rem; }
-    .section-head p { color: var(--fog); }
-
-    /* About */
-    .about-grid {
-      display: grid; gap: 2rem 4rem;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
-    }
-    .about-grid p { font-size: var(--s1); line-height: 1.5; }
-    .facts { margin: 0; display: grid; gap: 1.25rem; align-content: start; }
-    .facts div { border-left: 2px solid var(--mint); padding-left: 1rem; }
-    .facts dt { color: var(--fog); font-size: 0.95rem; }
-    .facts dd { margin: 0; font-weight: 500; }
-
-    /* Products: a circuit bus linking each product */
-    .bus { list-style: none; margin: 0; padding: 0; position: relative; }
-    .bus::before {
-      content: ""; position: absolute;
-      left: calc(var(--bus) / 2 - 1px); top: 0.6rem; bottom: 0.6rem;
-      width: 2px; background: var(--mint-deep);
-    }
-    .product {
-      position: relative;
-      padding-left: calc(var(--bus) + 1.5rem);
-      padding-bottom: clamp(3rem, 6vw, 4.5rem);
-    }
-    .product:last-child { padding-bottom: 0; }
-    .product::before {             /* node */
-      content: ""; position: absolute;
-      left: calc(var(--bus) / 2 - 0.5rem); top: 0.55rem;
-      width: 1rem; height: 1rem;
-      background: var(--black); border: 2px solid var(--mint); border-radius: 50%;
-    }
-    .product::after {              /* branch from node to name */
-      content: ""; position: absolute;
-      left: calc(var(--bus) / 2 + 0.5rem); top: calc(0.55rem + 0.5rem - 1px);
-      width: 1.5rem; height: 2px; background: var(--mint);
-    }
-    .product.planned::before { border-style: dashed; border-color: var(--fog); }
-    .product.planned::after { background: var(--fog); }
-    .product-top {
-      display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1.25rem;
-      margin-bottom: 1rem;
-    }
-    .product h3 { font-size: clamp(1.4rem, 3.4vw, var(--s2)); padding-left: 0.75rem; }
-    .status {
-      font-size: 0.85rem; font-weight: 500;
-      border: 1px solid var(--mint); color: var(--mint);
-      padding: 0.1rem 0.65rem; border-radius: 999px;
-    }
-    .planned .status { border-color: var(--fog); color: var(--fog); }
-    .product-body {
-      display: grid; gap: 1rem 3rem; padding-left: 0.75rem;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
-    }
-    .product-body p { margin: 0; }
-    .points { margin: 0; padding: 0; list-style: none; color: var(--fog); }
-    .points li { padding-left: 1.1rem; position: relative; margin-bottom: 0.45rem; }
-    .points li::before {
-      content: ""; position: absolute; left: 0; top: 0.7em;
-      width: 0.45rem; height: 2px; background: var(--mint);
-    }
-    .shells { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
-    .shells span {
-      background: var(--graphite); border: 1px solid var(--mint-deep);
-      padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.95rem;
-    }
-    .pricing-note { margin-top: clamp(2.5rem, 5vw, 3.5rem); color: var(--fog); }
-
-    /* Philosophy: a real sequence, so it is numbered */
-    .plan-steps {
-      list-style: none; margin: 0; padding: 0; counter-reset: step;
-      display: grid; gap: 1px; background: var(--mint-deep);
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
-      border: 1px solid var(--mint-deep);
-    }
-    .plan-steps li {
-      counter-increment: step;
-      background: var(--black);
-      padding: 1.75rem 1.5rem 2rem;
-    }
-    .plan-steps li::before {
-      content: counter(step);
-      display: block;
-      font-family: var(--display); color: var(--mint);
-      font-size: var(--s2); line-height: 1; margin-bottom: 1rem;
-    }
-    .plan-steps h3 { font-size: 1.05rem; margin-bottom: 0.5rem; }
-    .plan-steps p { color: var(--fog); margin: 0; }
-    .principle {
-      margin-top: clamp(2.5rem, 5vw, 3.5rem);
-      font-size: var(--s1); line-height: 1.5; max-width: 40ch;
-    }
-
-    /* Team */
-    .team {
-      list-style: none; margin: 0; padding: 0;
-      display: grid; gap: 2.5rem 2rem;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
-    }
-    .team li { border-top: 2px solid var(--mint); padding-top: 1.25rem; }
-    .team .name { font-family: var(--display); font-size: 1.1rem; letter-spacing: 0.04em; }
-    .team .role { color: var(--fog); margin: 0.35rem 0 0; }
-
-    /* Contact & footer */
-    .contact p { font-size: var(--s1); line-height: 1.5; }
-    .site-footer {
-      border-top: 1px solid var(--mint-deep);
-      padding-block: 2rem; color: var(--fog); font-size: 0.95rem;
-    }
-    .site-footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
-
-    /* Small screens ------------------------------------------------------ */
-    @media (max-width: 40rem) {
-      .site-nav { display: none; }
-      :root { --bus: 1.5rem; }
-      .product { padding-left: calc(var(--bus) + 1rem); }
-      .product::after { width: 1rem; }
-      .product h3, .product-body { padding-left: 0.25rem; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      .logo > * { animation: none !important; }
-      .l-green { clip-path: none; }
-      .l-white, .l-word { opacity: 1; translate: none; }
-      .l-core { opacity: .45; scale: 1; }
-      .l-sweep { display: none; }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="#top" aria-label="MB95 home">
-        <img src="assets/mb95-mark-small.webp" alt="" width="240" height="164">
+      <a class="brand" href="index.html" aria-label="MB95 home">
+        <img src="assets/mb95-mark.svg" alt="" width="48" height="33">
         <span>MB<span class="nine">9</span>5</span>
       </a>
-      <nav class="site-nav" aria-label="Main">
+      <button class="menu-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Main">
         <ul>
-          <li><a href="#about">About</a></li>
-          <li><a href="#products">Products</a></li>
-          <li><a href="#philosophy">Philosophy</a></li>
-          <li><a href="#team">Team</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="index.html" aria-current="page">Home</a></li>
+          <li><a href="workdesk.html">Workdesk</a></li>
+          <li><a href="workshell.html">WorkShell</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a class="nav-fund" href="fund.html">Fund MB95</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <main id="main">
-    <!-- Hero ------------------------------------------------------------ -->
-    <section class="hero" id="top">
-      <div class="wrap">
+    <section class="hero">
+      <div class="wrap hero-grid">
         <h1 class="hero-logo">
-          <span class="logo" role="img" aria-label="MB95">
-            <img class="l-green" src="assets/logo-green.webp" alt="" fetchpriority="high">
-            <img class="l-white" src="assets/logo-white.webp" alt="">
-            <span class="l-sweep"></span>
-            <span class="l-core"></span>
-            <img class="l-word l-m" src="assets/logo-word.webp" alt="">
-            <img class="l-word l-b" src="assets/logo-word.webp" alt="">
-            <img class="l-word l-9" src="assets/logo-word.webp" alt="">
-            <img class="l-word l-5" src="assets/logo-word.webp" alt="">
-          </span>
+          <img src="assets/mb95-logo-animated.svg" alt="MB95" width="1271" height="1165" fetchpriority="high">
         </h1>
-        <p class="hero-lede">A technology company from Malerkotla, Punjab, building one connected ecosystem for structured work, from the desktop to the phone.</p>
-        <p class="motto">Every reality begins as an impossible dream.</p>
-      </div>
-    </section>
-
-    <!-- About ----------------------------------------------------------- -->
-    <section class="section" id="about" aria-labelledby="about-title">
-      <div class="wrap">
-        <div class="section-head">
-          <h2 id="about-title">About MB95</h2>
-        </div>
-        <div class="about-grid">
-          <div>
-            <p>MB95 builds products that work as coherent environments rather than disconnected utilities. Each product has one clear job, and together they help a person move from an objective to the next action.</p>
-            <p>Our decisions start from clear user needs, system behaviour people can understand, and development we can sustain.</p>
+        <div class="hero-copy">
+          <p class="lede">A technology company from Malerkotla, Punjab, building one connected ecosystem for structured work, from the desktop to the phone.</p>
+          <p class="motto">Every reality begins as an impossible dream.</p>
+          <div class="actions">
+            <a class="btn" href="workdesk.html">Explore Workdesk</a>
+            <a class="btn ghost" href="fund.html">Fund MB95</a>
           </div>
-          <dl class="facts">
-            <div><dt>Founded</dt><dd>September 2026</dd></div>
-            <div><dt>Based in</dt><dd>Malerkotla, Punjab, India</dd></div>
-            <div><dt>Building</dt><dd>Workdesk, Workshell and the Workdesk Store</dd></div>
-          </dl>
         </div>
       </div>
     </section>
 
-    <!-- Products -------------------------------------------------------- -->
-    <section class="section" id="products" aria-labelledby="products-title">
+    <section class="section" aria-labelledby="eco-title">
       <div class="wrap">
         <div class="section-head">
-          <h2 id="products-title">The ecosystem</h2>
-          <p>Three products with distinct responsibilities. They connect where it helps, and each one stays useful on its own.</p>
+          <h2 id="eco-title">The ecosystem</h2>
+          <p>Products with distinct jobs. They connect where it helps, and each one stays useful on its own.</p>
         </div>
-
         <ul class="bus">
           <li class="product">
-            <div class="product-top">
-              <h3>Workdesk</h3>
-              <span class="status">In development</span>
-            </div>
-            <div class="product-body">
-              <p>A desktop operating environment for people who want structure in their work. It organises plans, tasks and reviews into focused workspaces, and gives quick access to the applications that already do specialised jobs well.</p>
-              <ul class="points">
-                <li>Plans, tasks, milestones and habits in one place</li>
-                <li>Reminders, constraints and progress evaluation</li>
-                <li>Separate workspaces for reading, writing, thinking and general use</li>
-                <li>For students, developers, writers, researchers and entrepreneurs</li>
-              </ul>
-            </div>
+            <div class="product-top"><h3><a href="workdesk.html">Workdesk</a></h3><span class="status">Free download</span></div>
+            <p>A desktop operating environment for structured work. Plans, tasks and focused workspaces in one system, built on Linux.</p>
+            <a class="more" href="workdesk.html">About Workdesk</a>
           </li>
-
           <li class="product">
-            <div class="product-top">
-              <h3>Workshell</h3>
-              <span class="status">In development</span>
-            </div>
-            <div class="product-body">
-              <div>
-                <p>A launcher for Android phones and tablets. Instead of a grid of unrelated apps, Workshell groups your apps into Shells, each built for one kind of use. It works on its own, and with Workdesk for shared plans and tasks.</p>
-                <div class="shells" aria-label="Shells">
-                  <span>Social</span><span>Memory</span><span>Explore</span><span>General</span>
-                </div>
-              </div>
-              <ul class="points">
-                <li>Essential tools stay one tap away from the start screen</li>
-                <li>Data in each Shell stays separate unless you choose to share it</li>
-                <li>Designed to avoid attention traps</li>
-                <li>Dark theme by default</li>
-              </ul>
-            </div>
+            <div class="product-top"><h3><a href="workshell.html">WorkShell</a></h3><span class="status">In development</span></div>
+            <p>A launcher for Android phones and tablets that groups your apps into Shells, each built for one kind of use.</p>
+            <a class="more" href="workshell.html">About WorkShell</a>
           </li>
-
-          <li class="product planned">
-            <div class="product-top">
-              <h3>Workdesk Store</h3>
-              <span class="status">Planned</span>
-            </div>
-            <div class="product-body">
-              <p>The place to discover and install workspaces and other add-ons for the Workdesk ecosystem.</p>
-            </div>
+          <li class="product">
+            <div class="product-top"><h3>Workdesk Store</h3><span class="status">Live</span></div>
+            <p>Where workspaces, looks and add-ons for Workdesk are found and installed.</p>
           </li>
         </ul>
-
-        <p class="pricing-note">Pricing will be announced at launch.</p>
       </div>
     </section>
 
-    <!-- Philosophy ------------------------------------------------------ -->
-    <section class="section" id="philosophy" aria-labelledby="philosophy-title">
+    <section class="section" aria-labelledby="fund-title">
       <div class="wrap">
-        <div class="section-head">
-          <h2 id="philosophy-title">A plan is more than a list of tasks</h2>
-          <p>Our products are built around one model of how work gets done. A plan is a structure for making decisions, and it has six parts.</p>
+        <div class="section-head" style="margin:0">
+          <h2 id="fund-title">Fund MB95: Initial Deployment</h2>
+          <p>We are raising ₹4,00,000 for development workstations, development tools and our first production setup. Every supporter gets Workdesk and WorkShell free.</p>
+          <div class="actions"><a class="btn" href="fund.html">See the plan and give</a></div>
         </div>
-        <ol class="plan-steps">
-          <li><h3>Objective</h3><p>The outcome you are pursuing.</p></li>
-          <li><h3>Requirements</h3><p>The skills, resources and conditions you need.</p></li>
-          <li><h3>Actions and habits</h3><p>One-time actions and repeated behaviours that move the work forward.</p></li>
-          <li><h3>Behaviour</h3><p>Ways to handle procrastination, consistency, attention and decisions.</p></li>
-          <li><h3>Constraints</h3><p>Limits to respect, and what you deliberately leave out.</p></li>
-          <li><h3>Evaluation</h3><p>The evidence that shows whether the approach is working.</p></li>
-        </ol>
-        <p class="principle">We support your own way of working. We don't assume everyone needs the same routine.</p>
       </div>
     </section>
 
-    <!-- Team ------------------------------------------------------------ -->
-    <section class="section" id="team" aria-labelledby="team-title">
-      <div class="wrap">
-        <div class="section-head">
-          <h2 id="team-title">Founding team</h2>
-        </div>
-        <ul class="team">
-          <li><div class="name">Mohammad Z.</div><p class="role">Founder and CEO</p></li>
-          <li><div class="name">Gurdeep S.</div><p class="role">Finance Manager</p></li>
-          <li><div class="name">Mohammad S.</div><p class="role">Hardware Engineer</p></li>
-          <li><div class="name">Suhail A.</div><p class="role">Software Engineer</p></li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- Contact --------------------------------------------------------- -->
-    <section class="section contact" id="contact" aria-labelledby="contact-title">
-      <div class="wrap">
-        <div class="section-head">
-          <h2 id="contact-title">Contact</h2>
-        </div>
-        <p>MB95 works from Malerkotla, Punjab, India.</p>
-        <!-- TODO: add the official MB95 contact email once it is decided. -->
-      </div>
-    </section>
   </main>
 
   <footer class="site-footer">
-    <div class="wrap">
-      <span>© 2026 MB95</span>
-      <span>Malerkotla, Punjab, India</span>
+    <div class="wrap footer-grid">
+      <div>
+        <p style="margin:0 0 .4rem">© 2026 MB95 · Malerkotla, Punjab, India</p>
+        <a href="mailto:mb95contact@proton.me">mb95contact@proton.me</a>
+      </div>
+      <ul class="footer-links">
+        <li><a href="workdesk.html">Workdesk</a></li>
+        <li><a href="workshell.html">WorkShell</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="fund.html">Fund MB95</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
     </div>
   </footer>
+  <script src="site.js"></script>
 </body>
 </html>
