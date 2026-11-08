@@ -86,7 +86,7 @@ h1, h2, h3 {
   font: inherit; font-weight: 500; padding: .35rem .8rem; border-radius: 6px; cursor: pointer;
 }
 
-@media (max-width: 52rem) {
+@media (max-width: 60rem) {
   .menu-toggle { display: inline-block; }
   .site-nav { position: absolute; left: 0; right: 0; top: 100%; background: var(--black); border-bottom: 1px solid var(--mint-deep); display: none; }
   .site-nav.open { display: block; }
@@ -272,3 +272,12 @@ details p { margin: .75rem 0 0; color: var(--fog); }
 @media (max-width: 40rem) { :root { --bus: 1.5rem; } .product { padding-left: calc(var(--bus) + 1rem); } .product::after { width: 1rem; } .product h3, .product p, .product .more { padding-left: .25rem; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .meter-fill { transition: none; } }
 button.btn { font: inherit; font-weight: 700; cursor: pointer; }
+
+/* Hafiz Kernel illustration: sealed cells on a microkernel */
+.cells { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; border: 1px solid var(--mint-deep); border-radius: 10px; padding: 1rem; background: radial-gradient(120% 80% at 50% 100%, var(--mint-dim), var(--black) 65%); }
+.cell { border: 1.5px solid var(--mint); border-radius: 8px; padding: .9rem .7rem; text-align: center; background: rgba(0,0,0,.6); }
+.cell b { display: block; font-family: var(--display); font-weight: 400; font-size: .85rem; letter-spacing: .04em; }
+.cell span { color: var(--mint); font-size: .8rem; }
+.cell.ask { border-style: dashed; border-color: var(--fog); }
+.cell.ask span { color: var(--fog); }
+.core { grid-column: 1 / -1; text-align: center; background: var(--mint); color: var(--black); font-family: var(--display); font-size: .9rem; letter-spacing: .06em; padding: .8rem; border-radius: 8px; }
