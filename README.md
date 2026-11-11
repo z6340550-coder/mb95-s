@@ -1,6 +1,6 @@
-# MB95 website
+# XQ95 website
 
-Public website for **MB95**, a technology company from Malerkotla, Punjab, India.
+Public website for **XQ95**, a technology company from Malerkotla, Punjab, India.
 Static HTML/CSS, no build step needed to serve it.
 
 | Page | File |
@@ -9,7 +9,7 @@ Static HTML/CSS, no build step needed to serve it.
 | Workdesk | `workdesk.html` |
 | WorkShell | `workshell.html` |
 | Pricing | `pricing.html` |
-| Fund MB95: Initial Deployment | `fund.html` |
+| Fund XQ95: Initial Deployment | `fund.html` |
 | About | `about.html` |
 | Contact | `contact.html` |
 
